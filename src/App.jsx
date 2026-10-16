@@ -2,12 +2,13 @@ import "./App.css";
 import { Button } from "react-bootstrap";
 
 import { ToastContainer, toast } from "react-toastify";
+import { Routes, Route } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
     <>
-      <Button>Click Me!</Button>
-      <h1>Coming Soon ....</h1>;
+      <AppRoutes />
     </>
   );
 }
