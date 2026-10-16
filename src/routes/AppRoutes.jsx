@@ -6,10 +6,18 @@ import {
   SignInPage,
   SignUpPage,
   BookLanding,
+  Books,
+  ReviewPage,
+  UserPage,
+  UserProfile,
+  EditBookPage,
+  NewBookPage,
+  BorrowPage,
 } from "../pages";
 
 import { Routes, Route } from "react-router-dom";
 import { DefaultLayout } from "../components/layout/DefaultLayout";
+import { UserLayout } from "../components/layout/UserLayout";
 
 const AppRoutes = () => {
   return (
@@ -24,7 +32,17 @@ const AppRoutes = () => {
         </Route>
 
         {/* private pages */}
-        <Route path="/user" element={<DashboardPage />} />
+        <Route path="/user" element={<UserLayout />}>
+          <Route index element={<DashboardPage />} />
+          <Route path="books" element={<Books />} />
+          <Route path="new-book" element={<NewBookPage />} />
+          <Route path="edit-book" element={<EditBookPage />} />
+          <Route path="book-landing" element={<BookLanding />} />
+          <Route path="review" element={<ReviewPage />} />
+          <Route path="all" element={<UserPage />} />
+          <Route path="user-profile" element={<UserProfile />} />
+          <Route path="borrow-history" element={<BorrowPage />} />
+        </Route>
       </Routes>
     </>
   );
