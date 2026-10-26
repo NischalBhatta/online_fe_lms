@@ -9,7 +9,8 @@ import { signUPNewUserAPI } from "../../services/authAPI";
 const initialState = {};
 
 const SignUpPage = () => {
-  const { form, setForm, handleOnChange } = useForm(initialState);
+  const { form, setForm, handleOnChange, passwordErrors } =
+    useForm(initialState);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ const SignUpPage = () => {
     console.log(result);
   };
 
+  console.log(passwordErrors);
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -41,8 +43,18 @@ const SignUpPage = () => {
               onChange={handleOnChange}
             />
           ))}
+          <div className="py-3">
+            <ul className="text-danger">
+              {passwordErrors.length > 0 &&
+                passwordErrors.map((msg) => <li key={msg}>{msg}</li>)}
+            </ul>
+          </div>
 
-          <Button variant="primary" type="submit">
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={passwordErrors.length}
+          >
             Submit
           </Button>
         </Form>
