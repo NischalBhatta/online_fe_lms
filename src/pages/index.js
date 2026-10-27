@@ -3,6 +3,8 @@ export { default as DashboardPage } from "./dashboard/DashboardPage";
 export { default as ForgetPassword } from "./auth/ForgetPassword";
 export { default as SignInPage } from "./auth/SignInPage";
 export { default as SignUpPage } from "./auth/SignUpPage";
+export { default as VerifyUser } from "./auth/VerifyUser";
+
 export { default as BookLanding } from "./books/BookLanding";
 export { default as EditBookPage } from "./books/EditBookPage";
 export { default as NewBookPage } from "./books/NewBookPage";

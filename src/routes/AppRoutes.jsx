@@ -13,6 +13,7 @@ import {
   EditBookPage,
   NewBookPage,
   BorrowPage,
+  VerifyUser,
 } from "../pages";
 
 import { Routes, Route } from "react-router-dom";
@@ -27,6 +28,7 @@ const AppRoutes = () => {
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<HomePage />} />
           <Route path="signup" element={<SignUpPage />} />
+          <Route path="verify-user" element={<VerifyUser />} />
           <Route path="signin" element={<SignInPage />} />
           <Route path="forget-password" element={<ForgetPassword />} />
         </Route>
