@@ -28,7 +28,7 @@ const AppRoutes = () => {
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<HomePage />} />
           <Route path="signup" element={<SignUpPage />} />
-          <Route path="verify-user" element={<VerifyUser />} />
+          <Route path="activate-user" element={<VerifyUser />} />
           <Route path="signin" element={<SignInPage />} />
           <Route path="forget-password" element={<ForgetPassword />} />
         </Route>
