@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import CustomInput from "../../components/customInput/customInput";
+import CustomInput from "../../components/customInput/CustomInput";
 import { signupInputs } from "../../assets/customInputs/userSignupInputs";
 import useForm from "../../hooks/useForm";
 import { signUPNewUserAPI } from "../../services/authAPI";
