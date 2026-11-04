@@ -16,3 +16,11 @@ export const signUPNewUserAPI = async (payload) => {
   const result = await apiProcessor(obj);
   return result;
 };
+export const activateNewUserAPI = async (payload) => {
+  const obj = {
+    url: authApiEP + "/activate-user",
+    method: "POST",
+    payload,
+  };
+  return apiProcessor(obj);
+};

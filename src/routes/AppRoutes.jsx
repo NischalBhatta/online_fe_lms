@@ -29,7 +29,7 @@ const AppRoutes = () => {
           <Route index element={<HomePage />} />
           <Route path="signup" element={<SignUpPage />} />
           <Route path="activate-user" element={<VerifyUser />} />
-          <Route path="signin" element={<SignInPage />} />
+          <Route path="login" element={<SignInPage />} />
           <Route path="forget-password" element={<ForgetPassword />} />
         </Route>
 
