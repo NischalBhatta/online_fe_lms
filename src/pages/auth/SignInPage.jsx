@@ -2,14 +2,24 @@ import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import CustomInput from "../../components/customInput/CustomInput";
 import useForm from "../../hooks/useForm";
+import { signinUserAPI } from "../../services/authAPI";
 const initialState = {};
 
 const SignInPage = () => {
   const { form, handleOnChange } = useForm(initialState);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     console.log(form);
+    if (form.email && form.password) {
+      const { payload } = await signinUserAPI(form);
+      sessionStorage.setItem("accessJWT", payload.accessJWT);
+      localStorage.setItem("refreshJWT", payload.refreshJWT);
+
+      //TODO: getting user and redirecting to dashboard
+    } else {
+      alert("Both input must be filled");
+    }
   };
 
   return (
