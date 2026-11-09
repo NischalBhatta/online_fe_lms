@@ -3,6 +3,7 @@ import { Form, Button, Card } from "react-bootstrap";
 import CustomInput from "../../components/customInput/CustomInput";
 import useForm from "../../hooks/useForm";
 import { signinUserAPI } from "../../services/authAPI";
+import { fetchUserAPI } from "../../features/user/userAPI";
 const initialState = {};
 
 const SignInPage = () => {
@@ -13,8 +14,14 @@ const SignInPage = () => {
     console.log(form);
     if (form.email && form.password) {
       const { payload } = await signinUserAPI(form);
-      sessionStorage.setItem("accessJWT", payload.accessJWT);
-      localStorage.setItem("refreshJWT", payload.refreshJWT);
+      if (payload?.accessJWT) {
+        sessionStorage.setItem("accessJWT", payload.accessJWT);
+        localStorage.setItem("refreshJWT", payload.refreshJWT);
+
+        //call api to get user
+        const userInfo = await fetchUserAPI();
+        console.log(userInfo);
+      }
 
       //TODO: getting user and redirecting to dashboard
     } else {
