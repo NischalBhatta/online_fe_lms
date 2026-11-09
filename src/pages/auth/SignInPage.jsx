@@ -4,10 +4,14 @@ import CustomInput from "../../components/customInput/CustomInput";
 import useForm from "../../hooks/useForm";
 import { signinUserAPI } from "../../services/authAPI";
 import { fetchUserAPI } from "../../features/user/userAPI";
+import { fetchUserAction } from "../../features/user/userAction";
+import { useDispatch } from "react-redux";
 const initialState = {};
 
 const SignInPage = () => {
   const { form, handleOnChange } = useForm(initialState);
+
+  const dispatch = useDispatch();
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -18,9 +22,8 @@ const SignInPage = () => {
         sessionStorage.setItem("accessJWT", payload.accessJWT);
         localStorage.setItem("refreshJWT", payload.refreshJWT);
 
-        //call api to get user
-        const userInfo = await fetchUserAPI();
-        console.log(userInfo);
+        //call api to get user profile
+        dispatch(fetchUserAction());
       }
 
       //TODO: getting user and redirecting to dashboard
