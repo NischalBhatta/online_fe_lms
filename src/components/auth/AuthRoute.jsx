@@ -1,8 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 export const AuthRoute = ({ children }) => {
   //User Real Data
-  const isAuth = true;
-  return isAuth ? children : <Navigate to="/signin" />;
+  const { user } = useSelector((state) => state.userInfo);
+  const isAuth = user?._id;
+
+  return isAuth ? children : <Navigate to="/login" />;
 };
