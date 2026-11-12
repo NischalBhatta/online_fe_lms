@@ -11,3 +11,17 @@ export const fetchUserAction = () => async (dispatch) => {
 
   status === "success" && payload?._id && dispatch(setUser(payload));
 };
+
+export const autoLogin = () => (dispatch) => {
+  const accessJWT = sessionStorage.getItem("accesJWT");
+  if (accessJWT) {
+    dispatch(fetchUserAction());
+    return;
+  }
+  const refreshJWT = localStorage.getItem("refreshJWT");
+
+  if (refreshJWT) {
+    //fetch accessJWT and set it in the sessionStorage
+    //dispatch(fetchUserActiom())
+  }
+};

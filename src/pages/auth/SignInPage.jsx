@@ -4,11 +4,14 @@ import CustomInput from "../../components/customInput/CustomInput";
 import useForm from "../../hooks/useForm";
 import { signinUserAPI } from "../../services/authAPI";
 import { fetchUserAPI } from "../../features/user/userAPI";
-import { fetchUserAction } from "../../features/user/userAction";
+import { autoLogin, fetchUserAction } from "../../features/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-const initialState = {};
+const initialState = {
+  email: "1@7.com",
+  password: "Asdf1@",
+};
 
 const SignInPage = () => {
   const { form, handleOnChange } = useForm(initialState);
@@ -19,8 +22,8 @@ const SignInPage = () => {
   const { user } = useSelector((state) => state.userInfo);
 
   useEffect(() => {
-    user?._id && navigate("/user");
-  }, [user?._id, navigate]);
+    user?._id ? navigate("/user") : dispatch(autoLogin());
+  }, [user?._id, navigate, dispatch]);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -56,6 +59,7 @@ const SignInPage = () => {
               required
               placeholder="name@email.com"
               onChange={handleOnChange}
+              value={form.email}
             />
             <CustomInput
               label="Password"
@@ -64,6 +68,7 @@ const SignInPage = () => {
               required
               placeholder="**** ****"
               onChange={handleOnChange}
+              value={form.password}
             />
             <div className="d-grid">
               <Button type="submit">Sign In</Button>
