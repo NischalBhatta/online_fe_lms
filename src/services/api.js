@@ -44,6 +44,26 @@ export const apiProcessor = async ({
     console.log(error);
     const msg = error?.response?.data?.message || error.message;
     showToast && toast.error(msg);
+    if (error.status === 401 && msg === "jwt expired") {
+      //call api to get new accessJWT
+      const { payload } = await fetchNewAccessJWTApi();
+      if (payload) {
+        sessionStorage.setItem("accessJWT", payload);
+        return apiProcessor({
+          url,
+          method,
+          payload,
+          showToast,
+          isPrivateCall,
+          isRefreshJWT,
+        });
+      }
+
+      //call the apiProcessor()
+    } else {
+      sessionStorage.removeItem("accessJWT");
+      localStorage.removeItem("refreshJWT");
+    }
 
     return {
       status: "error",
