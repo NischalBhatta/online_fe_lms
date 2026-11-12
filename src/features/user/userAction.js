@@ -1,3 +1,4 @@
+import { fetchNewAccessJWTApi } from "../../services/authAPI";
 import { fetchUserAPI } from "./userAPI";
 import { setUser } from "./userSlice";
 
@@ -12,7 +13,7 @@ export const fetchUserAction = () => async (dispatch) => {
   status === "success" && payload?._id && dispatch(setUser(payload));
 };
 
-export const autoLogin = () => (dispatch) => {
+export const autoLogin = () => async (dispatch) => {
   const accessJWT = sessionStorage.getItem("accesJWT");
   if (accessJWT) {
     dispatch(fetchUserAction());
@@ -22,6 +23,11 @@ export const autoLogin = () => (dispatch) => {
 
   if (refreshJWT) {
     //fetch accessJWT and set it in the sessionStorage
-    //dispatch(fetchUserActiom())
+    const { payload } = await fetchNewAccessJWTApi();
+
+    if (payload) {
+      sessionStorage.setItem("accessJWT", payload);
+      dispatch(fetchUserAction());
+    }
   }
 };

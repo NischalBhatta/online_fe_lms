@@ -33,3 +33,14 @@ export const signinUserAPI = async (payload) => {
   };
   return apiProcessor(obj);
 };
+
+//request new JWT API
+export const fetchNewAccessJWTApi = async () => {
+  const obj = {
+    url: authApiEP + "/renew-jwt",
+    method: "get",
+    isPrivateCall: true,
+    isRefreshJWT: true,
+  };
+  return apiProcessor(obj);
+};
