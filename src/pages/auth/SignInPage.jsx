@@ -1,13 +1,12 @@
-import React, { useRef } from "react";
 import { Form, Button, Card, Spinner } from "react-bootstrap";
-import CustomInput from "../../components/customInput/CustomInput";
+import CustomInput from "@components/customInput/CustomInput";
 import useForm from "../../hooks/useForm";
-import { signinUserAPI } from "../../services/authAPI";
-import { fetchUserAPI } from "../../features/user/userAPI";
-import { autoLogin, fetchUserAction } from "../../features/user/userAction";
+import { signinUserAPI } from "@services/authAPI";
+
+import { autoLogin, fetchUserAction } from "@features/user/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 const initialState = {
   email: "1@7.com",
   password: "Asdf1@",

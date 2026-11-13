@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Alert } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { activateNewUserAPI } from "../../services/authAPI";
+import { activateNewUserAPI } from "@services/authAPI";
 
 const VerifyUser = () => {
   const [isPending, setIsPending] = useState(true);
