@@ -1,5 +1,5 @@
-import React from "react";
-import { Form, Button, Card } from "react-bootstrap";
+import React, { useRef } from "react";
+import { Form, Button, Card, Spinner } from "react-bootstrap";
 import CustomInput from "../../components/customInput/CustomInput";
 import useForm from "../../hooks/useForm";
 import { signinUserAPI } from "../../services/authAPI";
@@ -21,8 +21,23 @@ const SignInPage = () => {
 
   const { user } = useSelector((state) => state.userInfo);
 
+  const showLoaderRef = useRef(true);
+
   useEffect(() => {
     user?._id ? navigate("/user") : dispatch(autoLogin());
+
+    if (
+      sessionStorage.getItem("accessJWT") ||
+      localStorage.getItem("refreshJWT")
+    ) {
+      setTimeout(() => {
+        showLoaderRef.current = false;
+      }, 2000);
+    } else {
+      showLoaderRef.current = false;
+    }
+
+    showLoaderRef.current = false;
   }, [user?._id, navigate, dispatch]);
 
   const handleOnSubmit = async (e) => {
@@ -43,6 +58,14 @@ const SignInPage = () => {
       alert("Both input must be filled");
     }
   };
+
+  if (showLoaderRef.current) {
+    return (
+      <div className="vh-100 d-flex justify-content-center align-items-center">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="signin-page d-flex justify-content-center align-items-center">
