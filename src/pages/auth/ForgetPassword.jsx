@@ -7,6 +7,7 @@ const initialState = {};
 
 const ForgetPassword = (e) => {
   const emailRef = useRef("");
+  const { showPassResetForm, setShowPassResetForm } = useState(false);
 
   const { form, setForm, passwordErrors, handleOnChange } =
     useForm(initialState);
@@ -14,8 +15,13 @@ const ForgetPassword = (e) => {
     e.preventDefault();
 
     const email = emailRef.current.value;
+    console.log(email);
   };
-  console.log(form);
+
+  const handleOnPasswordReset = (e) => {
+    e.preventDefault();
+    console.log(form);
+  };
 
   return (
     <div className="signin-page d-flex justify-content-center align-items-center">
@@ -38,46 +44,55 @@ const ForgetPassword = (e) => {
               <Button type="submit">Request OTP</Button>
             </div>
           </Form>
-          <hr />
 
-          {/* show this form below once otp is sent */}
-          <div>
-            <Alert variant="success">Message</Alert>
+          {showPassResetForm && (
+            <>
+              <hr />
 
-            <Form onSubmit={handleOnSubmit}>
-              <CustomInput
-                label="OTP"
-                name="otp"
-                type="number"
-                required
-                placeholder="1234"
-                onChange={handleOnChange}
-              />
-              <CustomInput
-                label="Password"
-                name="password"
-                type="password"
-                required
-                placeholder="*********"
-                onChange={handleOnChange}
-              />
-              <CustomInput
-                label="Confirm Password"
-                name="confirmPassword"
-                type="password"
-                required
-                placeholder="*********"
-                onChange={handleOnChange}
-              />
-              <div className="d-grid">
-                <Button type="submit">Request OTP</Button>
+              {/* show this form below once otp is sent */}
+              <div>
+                <Alert variant="success">Message</Alert>
+
+                <Form onSubmit={handleOnPasswordReset}>
+                  <CustomInput
+                    label="OTP"
+                    name="otp"
+                    type="number"
+                    required
+                    placeholder="1234"
+                    onChange={handleOnChange}
+                  />
+                  <CustomInput
+                    label="Password"
+                    name="password"
+                    type="password"
+                    required
+                    placeholder="*********"
+                    onChange={handleOnChange}
+                  />
+                  <CustomInput
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    type="password"
+                    required
+                    placeholder="*********"
+                    onChange={handleOnChange}
+                  />
+                  <div className="py-3">
+                    <ul className="text-danger">
+                      {passwordErrors.length > 0 &&
+                        passwordErrors.map((msg) => <li key={msg}>{msg}</li>)}
+                    </ul>
+                  </div>
+                  <div className="d-grid">
+                    <Button type="submit" disabled={passwordErrors.length}>
+                      Reset Password{" "}
+                    </Button>
+                  </div>
+                </Form>
               </div>
-            </Form>
-          </div>
-          <div className="text-end my-3">
-            Ready to Login?
-            <a href="/login">Login Now</a>
-          </div>
+            </>
+          )}
         </Card.Body>
       </Card>
     </div>
