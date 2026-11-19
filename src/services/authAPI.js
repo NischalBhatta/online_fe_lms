@@ -24,3 +24,55 @@ export const activateNewUserAPI = async (payload) => {
   };
   return apiProcessor(obj);
 };
+export const signinUserAPI = async (payload) => {
+  const obj = {
+    url: authApiEP + "/login",
+    method: "POST",
+    payload,
+    showToast: true,
+  };
+  return apiProcessor(obj);
+};
+
+//request new JWT API
+export const fetchNewAccessJWTApi = async () => {
+  const obj = {
+    url: authApiEP + "/renew-jwt",
+    method: "get",
+    isPrivateCall: true,
+    isRefreshJWT: true,
+  };
+  return apiProcessor(obj);
+};
+
+//request password reset OTP API
+export const requestPassResetOTPAPI = async (payload) => {
+  const obj = {
+    url: authApiEP + "/otp",
+    method: "post",
+    payload,
+    showToast: true,
+  };
+  return apiProcessor(obj);
+};
+
+//reset password with OTP API
+export const resetPasswordAPI = async (payload) => {
+  const obj = {
+    url: authApiEP + "/reset-password",
+    method: "post",
+    payload,
+    showToast: true,
+  };
+  return apiProcessor(obj);
+};
+
+//logout user API
+export const logoutAPI = async () => {
+  const obj = {
+    url: authApiEP + "/logout",
+    method: "post",
+    isPrivateCall: true,
+  };
+  return apiProcessor(obj);
+};
