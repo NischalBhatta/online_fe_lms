@@ -1,32 +1,60 @@
-import React, { useRef } from "react";
+import { useRef, useState } from "react";
 import { Alert, Button, Card, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import CustomInput from "../../components/customInput/CustomInput";
 import useForm from "../../hooks/useForm.js";
+import {
+  requestPassResetOTPAPI,
+  resetPasswordAPI,
+} from "../../services/authAPI";
 
-const initialState = {};
+const initialState = {
+  otp: "",
+  password: "",
+  confirmPassword: "",
+};
 
-const ForgetPassword = (e) => {
+const ForgetPassword = () => {
   const emailRef = useRef("");
-  const { showPassResetForm, setShowPassResetForm } = useState(false);
+  const navigate = useNavigate();
 
-  const { form, setForm, passwordErrors, handleOnChange } =
-    useForm(initialState);
-  const handleOnSubmit = (e) => {
+  const [showPassResetForm, setShowPassResetForm] = useState(false);
+  const [email, setEmail] = useState("");
+  const [otpMessage, setOtpMessage] = useState("");
+  const [isPending, setIsPending] = useState(false);
+
+  const { form, passwordErrors, handleOnChange } = useForm(initialState);
+
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    const email = emailRef.current.value;
-    console.log(email);
+    const enteredEmail = emailRef.current.value;
+    setIsPending(true);
+    const { status, message } = await requestPassResetOTPAPI({
+      email: enteredEmail,
+    });
+    setIsPending(false);
+
+    if (status === "success") {
+      setEmail(enteredEmail);
+      setOtpMessage(message);
+      setShowPassResetForm(true);
+    }
   };
 
-  const handleOnPasswordReset = (e) => {
+  const handleOnPasswordReset = async (e) => {
     e.preventDefault();
-    console.log(form);
+
+    setIsPending(true);
+    const { status } = await resetPasswordAPI({ email, ...form });
+    setIsPending(false);
+
+    status === "success" && navigate("/login");
   };
 
   return (
     <div className="signin-page d-flex justify-content-center align-items-center">
       <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
         <Card.Body>
           <Card.Title>Forgot Password? </Card.Title>
           <hr />
@@ -41,7 +69,9 @@ const ForgetPassword = (e) => {
               passRef={emailRef}
             />
             <div className="d-grid">
-              <Button type="submit">Request OTP</Button>
+              <Button type="submit" disabled={isPending}>
+                {showPassResetForm ? "Resend OTP" : "Request OTP"}
+              </Button>
             </div>
           </Form>
 
@@ -49,17 +79,21 @@ const ForgetPassword = (e) => {
             <>
               <hr />
 
-              {/* show this form below once otp is sent */}
+              {/* shown once the OTP has been requested */}
               <div>
-                <Alert variant="success">Message</Alert>
+                <Alert variant="success">{otpMessage}</Alert>
 
                 <Form onSubmit={handleOnPasswordReset}>
                   <CustomInput
                     label="OTP"
                     name="otp"
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="\d{6}"
+                    maxLength={6}
                     required
-                    placeholder="1234"
+                    placeholder="123456"
+                    value={form.otp}
                     onChange={handleOnChange}
                   />
                   <CustomInput
@@ -68,6 +102,7 @@ const ForgetPassword = (e) => {
                     type="password"
                     required
                     placeholder="*********"
+                    value={form.password}
                     onChange={handleOnChange}
                   />
                   <CustomInput
@@ -76,6 +111,7 @@ const ForgetPassword = (e) => {
                     type="password"
                     required
                     placeholder="*********"
+                    value={form.confirmPassword}
                     onChange={handleOnChange}
                   />
                   <div className="py-3">
@@ -85,8 +121,11 @@ const ForgetPassword = (e) => {
                     </ul>
                   </div>
                   <div className="d-grid">
-                    <Button type="submit" disabled={passwordErrors.length}>
-                      Reset Password{" "}
+                    <Button
+                      type="submit"
+                      disabled={passwordErrors.length > 0 || isPending}
+                    >
+                      Reset Password
                     </Button>
                   </div>
                 </Form>

@@ -45,6 +45,28 @@ export const fetchNewAccessJWTApi = async () => {
   return apiProcessor(obj);
 };
 
+//request password reset OTP API
+export const requestPassResetOTPAPI = async (payload) => {
+  const obj = {
+    url: authApiEP + "/otp",
+    method: "post",
+    payload,
+    showToast: true,
+  };
+  return apiProcessor(obj);
+};
+
+//reset password with OTP API
+export const resetPasswordAPI = async (payload) => {
+  const obj = {
+    url: authApiEP + "/reset-password",
+    method: "post",
+    payload,
+    showToast: true,
+  };
+  return apiProcessor(obj);
+};
+
 //logout user API
 export const logoutAPI = async () => {
   const obj = {
