@@ -14,7 +14,7 @@ export const fetchUserAction = () => async (dispatch) => {
 };
 
 export const autoLogin = () => async (dispatch) => {
-  const accessJWT = sessionStorage.getItem("accesJWT");
+  const accessJWT = sessionStorage.getItem("accessJWT");
   if (accessJWT) {
     dispatch(fetchUserAction());
     return;

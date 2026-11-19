@@ -13,13 +13,13 @@ const Header = () => {
   const { user } = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
 
-  const handleOnLogout = () => {
+  const handleOnLogout = async () => {
+    //call api to logout from backend first, while the accessJWT is still available
+    await logoutAPI();
     //logout from Frontend
     sessionStorage.removeItem("accessJWT");
     localStorage.removeItem("refreshJWT");
     dispatch(setUser({}));
-    //call api to logout from backend
-    logoutAPI();
   };
   return (
     <Navbar expand="lg" className="bg-dark" variant="dark">

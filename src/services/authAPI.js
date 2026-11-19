@@ -49,7 +49,7 @@ export const fetchNewAccessJWTApi = async () => {
 export const logoutAPI = async () => {
   const obj = {
     url: authApiEP + "/logout",
-    method: "get",
+    method: "post",
     isPrivateCall: true,
   };
   return apiProcessor(obj);
