@@ -1,6 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { fetchNewAccessJWTApi } from "./authAPI";
+import store from "../redux/store";
+import { setUser } from "../features/user/userSlice";
 
 const getAccessJWT = () => {
   return sessionStorage.getItem("accessJWT");
@@ -16,6 +18,7 @@ export const apiProcessor = async ({
   showToast,
   isPrivateCall,
   isRefreshJWT,
+  isRetry = false,
 }) => {
   try {
     const headers = {};
@@ -43,10 +46,11 @@ export const apiProcessor = async ({
     return data;
   } catch (error) {
     console.log(error);
-    const msg = error?.response?.data?.message || error.message;
-    showToast && toast.error(msg);
-    if (error?.response?.status === 401 && msg === "jwt expired") {
-      //call api to get new accessJWT
+    let msg = error?.response?.data?.message || error.message;
+    const isUnauthorized = error?.response?.status === 401;
+
+    //expired access token: renew it silently and retry the request once
+    if (isUnauthorized && msg === "jwt expired" && !isRetry) {
       const { payload: newAccessJWT } = await fetchNewAccessJWTApi();
       if (newAccessJWT) {
         sessionStorage.setItem("accessJWT", newAccessJWT);
@@ -57,14 +61,22 @@ export const apiProcessor = async ({
           showToast,
           isPrivateCall,
           isRefreshJWT,
+          isRetry: true,
         });
       }
+    }
 
-      //call the apiProcessor()
-    } else {
+    //only an auth failure ends the session; other errors (e.g. validation) keep the user logged in
+    if (isUnauthorized && isPrivateCall) {
       sessionStorage.removeItem("accessJWT");
       localStorage.removeItem("refreshJWT");
+      //clearing the user makes AuthRoute redirect to /login
+      store.dispatch(setUser({}));
+      msg = "Your session has expired. Please log in again.";
     }
+
+    //the refresh call itself never toasts; the original request reports the outcome
+    showToast && !isRefreshJWT && toast.error(msg);
 
     return {
       status: "error",
