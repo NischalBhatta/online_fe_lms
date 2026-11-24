@@ -1,16 +1,22 @@
 import Stack from "react-bootstrap/Stack";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export const SideBar = () => {
+  const { user } = useSelector((state) => state.userInfo);
+  const isAdmin = user?.role === "admin";
+
   return (
     <Stack gap={3}>
       <div className="p-2">
         <Link className="nav-link" to="/user">
           User
         </Link>
-        <Link className="nav-link" to="/user/books">
-          Books
-        </Link>
+        {isAdmin && (
+          <Link className="nav-link" to="/user/books">
+            Books
+          </Link>
+        )}
         <Link className="nav-link" to="/user/review">
           Review
         </Link>

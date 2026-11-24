@@ -1,4 +1,3 @@
-import React from "react";
 import {
   HomePage,
   DashboardPage,
@@ -19,6 +18,7 @@ import {
 import { Routes, Route } from "react-router-dom";
 import { DefaultLayout } from "@components/layout/DefaultLayout";
 import { UserLayout } from "@components/layout/UserLayout";
+import { AdminRoute } from "@components/auth/AdminRoute";
 
 const AppRoutes = () => {
   return (
@@ -36,9 +36,31 @@ const AppRoutes = () => {
         {/* private pages */}
         <Route path="/user" element={<UserLayout />}>
           <Route index element={<DashboardPage />} />
-          <Route path="books" element={<Books />} />
-          <Route path="new-book" element={<NewBookPage />} />
-          <Route path="edit-book" element={<EditBookPage />} />
+          {/* admin only */}
+          <Route
+            path="books"
+            element={
+              <AdminRoute>
+                <Books />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="new-book"
+            element={
+              <AdminRoute>
+                <NewBookPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="edit-book/:_id"
+            element={
+              <AdminRoute>
+                <EditBookPage />
+              </AdminRoute>
+            }
+          />
           <Route path="book-landing" element={<BookLanding />} />
           <Route path="review" element={<ReviewPage />} />
           <Route path="all" element={<UserPage />} />
