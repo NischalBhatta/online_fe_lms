@@ -2,20 +2,39 @@ import {
   deleteBookAPI,
   fetchAdminBooksAPI,
   fetchBookAPI,
+  fetchPublicBooksAPI,
   postNewBookAPI,
   updateBookAPI,
 } from "./bookAPI";
-import { setBooks, setSelectedBook } from "./bookSlice";
+import {
+  setBooks,
+  setIsLoading,
+  setPublicBooks,
+  setSelectedBook,
+} from "./bookSlice";
+
+//Public catalog: active books for the HomePage
+export const fetchPublicBooksAction = () => async (dispatch) => {
+  dispatch(setIsLoading(true));
+  const { status, payload } = await fetchPublicBooksAPI();
+  status === "success" &&
+    Array.isArray(payload) &&
+    dispatch(setPublicBooks(payload));
+  dispatch(setIsLoading(false));
+};
 
 export const fetchAdminBooksAction = () => async (dispatch) => {
   const { status, payload } = await fetchAdminBooksAPI();
   status === "success" && Array.isArray(payload) && dispatch(setBooks(payload));
 };
 
+//single book for the details and edit pages; returns the status so pages know found/not found
 export const fetchSingleBookAction = (_id) => async (dispatch) => {
   dispatch(setSelectedBook({}));
+  dispatch(setIsLoading(true));
   const { status, payload } = await fetchBookAPI(_id);
   status === "success" && payload?._id && dispatch(setSelectedBook(payload));
+  dispatch(setIsLoading(false));
   return status;
 };
 

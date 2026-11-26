@@ -3,6 +3,14 @@ import { apiProcessor } from "@services/api";
 const apiBaseUrl = import.meta.env.VITE_ROOT_API;
 const bookApiEP = apiBaseUrl + "/api/v1/books";
 
+//Public: active books for the catalog
+export const fetchPublicBooksAPI = () => {
+  return apiProcessor({
+    url: bookApiEP,
+    method: "get",
+  });
+};
+
 //Admin: all books, including inactive
 export const fetchAdminBooksAPI = () => {
   return apiProcessor({
