@@ -1,6 +1,4 @@
-.main {
-  min-height: 80vh;
-}
+/* Page-specific styles (global theme and shared UI live in index.css) */
 
 /* signin page */
 .signin-page {

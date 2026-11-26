@@ -24,30 +24,32 @@ const Header = () => {
   return (
     <Navbar expand="lg" className="bg-dark" variant="dark">
       <Container>
-        <Navbar.Brand href="home">LMS</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          LMS
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Link className="nav-link" href="/">
+            <Link className="nav-link" to="/">
               Home
             </Link>
             {user?._id ? (
               <>
-                <Link className="nav-link" href="/user">
+                <Link className="nav-link" to="/user">
                   <MdDashboard />
                   Dashboard
                 </Link>
-                <Link className="nav-link" href="/" onClick={handleOnLogout}>
+                <Link className="nav-link" to="/" onClick={handleOnLogout}>
                   <IoExit />
                   Logout
                 </Link>
               </>
             ) : (
               <>
-                <Link className="nav-link" href="/signup">
+                <Link className="nav-link" to="/signup">
                   Sign Up
                 </Link>
-                <Link className="nav-link" href="/login">
+                <Link className="nav-link" to="/login">
                   Login
                 </Link>
               </>

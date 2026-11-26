@@ -1,0 +1,111 @@
+/* Global styles, loaded AFTER Bootstrap (see main.jsx) so these rules win */
+
+/* ---------- Theme ---------- */
+:root {
+  --lms-primary: #2c5282;
+  --lms-primary-dark: #1a365d;
+  --lms-accent: #ed8936;
+  --lms-bg: #f7f8fa;
+  --lms-card-radius: 0.75rem;
+}
+
+body {
+  background-color: var(--lms-bg);
+}
+
+/* page body grows so the footer stays at the bottom */
+.main {
+  min-height: 80vh;
+}
+
+/* ---------- Home hero ---------- */
+.hero {
+  background: linear-gradient(
+    135deg,
+    var(--lms-primary-dark),
+    var(--lms-primary)
+  );
+  color: #fff;
+  padding: 3.5rem 0;
+  text-align: center;
+}
+
+.hero-title {
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.hero-subtitle {
+  opacity: 0.85;
+  margin-bottom: 1.5rem;
+}
+
+.hero-search {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-weight: 600;
+  color: var(--lms-primary-dark);
+}
+
+/* ---------- Book card (catalog grid) ---------- */
+.book-card {
+  border: none;
+  border-radius: var(--lms-card-radius);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* same height for every cover, cropped evenly */
+.book-card-cover {
+  height: 260px;
+  object-fit: cover;
+  background-color: #e9ecef;
+}
+
+/* long titles stop after 2 lines */
+.book-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-card-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Book details page ---------- */
+.book-cover-lg {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: var(--lms-card-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  background-color: #e9ecef;
+}
+
+.book-details-title {
+  font-weight: 700;
+  color: var(--lms-primary-dark);
+}
+
+.book-description {
+  white-space: pre-line; /* keep the admin's line breaks */
+  line-height: 1.7;
+}
