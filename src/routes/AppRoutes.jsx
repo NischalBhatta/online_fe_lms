@@ -4,7 +4,7 @@ import {
   ForgetPassword,
   SignInPage,
   SignUpPage,
-  BookLanding,
+  BookDetailsPage,
   Books,
   ReviewPage,
   UserPage,
@@ -31,6 +31,8 @@ const AppRoutes = () => {
           <Route path="activate-user" element={<VerifyUser />} />
           <Route path="login" element={<SignInPage />} />
           <Route path="forget-password" element={<ForgetPassword />} />
+          {/* :_id is read by BookDetailsPage with useParams() */}
+          <Route path="book/:_id" element={<BookDetailsPage />} />
         </Route>
 
         {/* private pages */}
@@ -61,7 +63,6 @@ const AppRoutes = () => {
               </AdminRoute>
             }
           />
-          <Route path="book-landing" element={<BookLanding />} />
           <Route path="review" element={<ReviewPage />} />
           <Route path="all" element={<UserPage />} />
           <Route path="user-profile" element={<UserProfile />} />
