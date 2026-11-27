@@ -22,7 +22,7 @@ export const bookInputs = [
   },
   {
     label: "Published Year",
-    name: "publishedYear",
+    name: "year",
     type: "number",
     min: 1000,
     max: new Date().getFullYear(),

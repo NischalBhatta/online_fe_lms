@@ -6,17 +6,17 @@ import { bookInputs } from "../../assets/customInputs/bookInputs";
 import { getBookImageSrc, showPlaceholder } from "@services/utils/imageUrl";
 
 const TEXT_FIELDS = bookInputs.map(({ name }) => name);
-const EDIT_ONLY_FIELDS = ["status", "isAvailable"];
+const EDIT_ONLY_FIELDS = ["status", "available"];
 
 const emptyBook = {
   title: "",
   author: "",
   isbn: "",
-  publishedYear: "",
+  year: "",
   genre: "",
   description: "",
   status: "active",
-  isAvailable: true,
+  available: true,
 };
 
 //Shared by NewBookPage and EditBookPage.
@@ -25,7 +25,7 @@ const BookForm = ({ book = {}, isEdit = false, submitLabel, onSubmit }) => {
   const { form, handleOnChange } = useForm({
     ...emptyBook,
     ...book,
-    publishedYear: book.publishedYear ?? "",
+    year: book.year ?? "",
   });
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState("");
@@ -85,8 +85,8 @@ const BookForm = ({ book = {}, isEdit = false, submitLabel, onSubmit }) => {
                 <Form.Group className="mb-3">
                   <Form.Label>Availability</Form.Label>
                   <Form.Select
-                    name="isAvailable"
-                    value={String(form.isAvailable)}
+                    name="available"
+                    value={String(form.available)}
                     onChange={handleOnChange}
                   >
                     <option value="true">Available</option>
@@ -109,7 +109,7 @@ const BookForm = ({ book = {}, isEdit = false, submitLabel, onSubmit }) => {
             />
           </Form.Group>
           <Image
-            src={preview || getBookImageSrc(book.imageUrl)}
+            src={preview || getBookImageSrc(book.imgUrl)}
             onError={showPlaceholder}
             alt="Book cover preview"
             thumbnail

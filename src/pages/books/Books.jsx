@@ -57,7 +57,7 @@ const Books = () => {
                 <td>{i + 1}</td>
                 <td>
                   <Image
-                    src={getBookImageSrc(book.imageUrl)}
+                    src={getBookImageSrc(book.imgUrl)}
                     onError={showPlaceholder}
                     alt={book.title}
                     width={50}
@@ -68,8 +68,8 @@ const Books = () => {
                 </td>
                 <td>
                   {book.title}
-                  {book.publishedYear && (
-                    <div className="text-muted small">{book.publishedYear}</div>
+                  {book.year && (
+                    <div className="text-muted small">{book.year}</div>
                   )}
                 </td>
                 <td>{book.author}</td>
@@ -80,8 +80,8 @@ const Books = () => {
                   </Badge>
                 </td>
                 <td>
-                  <Badge bg={book.isAvailable ? "info" : "warning"}>
-                    {book.isAvailable ? "Available" : "Not available"}
+                  <Badge bg={book.available ? "info" : "warning"}>
+                    {book.available ? "Available" : "Not available"}
                   </Badge>
                 </td>
                 <td className="text-nowrap">

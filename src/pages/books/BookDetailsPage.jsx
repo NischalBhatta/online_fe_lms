@@ -77,7 +77,7 @@ const BookDetailsPage = () => {
       <Row className="g-4">
         <Col md={4} className="text-center">
           <img
-            src={getBookImageSrc(book.imageUrl)}
+            src={getBookImageSrc(book.imgUrl)}
             onError={showPlaceholder}
             alt={`Cover of ${book.title}`}
             className="book-cover-lg"
@@ -94,16 +94,16 @@ const BookDetailsPage = () => {
           <p className="lead text-muted">by {book.author}</p>
 
           <Badge
-            bg={book.isAvailable ? "success" : "secondary"}
+            bg={book.available ? "success" : "secondary"}
             className="mb-3"
           >
-            {book.isAvailable ? "Available to borrow" : "Currently borrowed"}
+            {book.available ? "Available to borrow" : "Currently borrowed"}
           </Badge>
 
           <table className="mb-4">
             <tbody>
               <DetailRow label="ISBN" value={book.isbn} />
-              <DetailRow label="Published" value={book.publishedYear} />
+              <DetailRow label="Published" value={book.year} />
               <DetailRow label="Genre" value={book.genre} />
             </tbody>
           </table>

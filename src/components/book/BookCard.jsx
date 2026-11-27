@@ -9,7 +9,7 @@ const BookCard = ({ book }) => {
     <Card className="book-card h-100">
       <Card.Img
         variant="top"
-        src={getBookImageSrc(book.imageUrl)}
+        src={getBookImageSrc(book.imgUrl)}
         onError={showPlaceholder}
         alt={`Cover of ${book.title}`}
         className="book-card-cover"
@@ -22,9 +22,9 @@ const BookCard = ({ book }) => {
         </Card.Title>
         <Card.Subtitle className="text-muted mb-2">{book.author}</Card.Subtitle>
         <div className="mt-auto d-flex justify-content-between align-items-center">
-          <small className="text-muted">{book.publishedYear || ""}</small>
-          <Badge bg={book.isAvailable ? "success" : "secondary"}>
-            {book.isAvailable ? "Available" : "Borrowed"}
+          <small className="text-muted">{book.year || ""}</small>
+          <Badge bg={book.available ? "success" : "secondary"}>
+            {book.available ? "Available" : "Borrowed"}
           </Badge>
         </div>
       </Card.Body>
